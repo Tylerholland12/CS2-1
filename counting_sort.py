@@ -8,6 +8,4 @@ def counting_sort(numbers):
     # TODO: Loop over given numbers and increment each number's count
     # TODO: Loop over counts and append that many numbers into output list
     # Stretch: Improve this to mutate input instead of creating new output list
-
-
     #TODO: Write some test cases
