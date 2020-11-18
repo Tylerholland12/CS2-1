@@ -34,4 +34,6 @@ def bucket_sort(numbers, num_buckets=10):
     else:
         return "Something went wrong"
     # TODO: Loop over buckets and append each bucket's numbers into output list
+    for buckets in range(len(new_bucket)):
+        pass
     # FIXME: Improve this to mutate input instead of creating new output list
