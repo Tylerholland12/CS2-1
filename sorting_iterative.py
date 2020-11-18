@@ -94,8 +94,8 @@ def insertion_sort(items):
     return items
 
 if __name__ == "__main__":
-    items = [1, 2, 3, 4, 5]
-    # items = [5, 3, 8, 12, 2, 1]
+    # items = [1, 2, 3, 4, 5]
+    items = [5, 3, 8, 12, 2, 1]
     print(is_sorted(items))
     bubble_sort(items)
     print(items)

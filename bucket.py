@@ -5,7 +5,7 @@ def bucket_sort(numbers, num_buckets=10):
     TODO: Memory usage: ??? Why and under what conditions?"""
     # TODO: Find range of given numbers (minimum and maximum values)
     for number in len(range(bucket_sort)):
-        number[0] ++
+        number[0]+=1
     # TODO: Create list of buckets to store numbers in subranges of input range
         new_bucket = []
     # TODO: Loop over given numbers and place each item in appropriate bucket
