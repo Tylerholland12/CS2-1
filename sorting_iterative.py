@@ -67,8 +67,6 @@ def selection_sort(items):
     
     return items
 
-
-
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
