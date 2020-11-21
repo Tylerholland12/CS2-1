@@ -17,6 +17,10 @@ def bucket_sort(numbers, num_buckets=10):
             elif item > 1:
                 return 
     # TODO: Loop over buckets and append each bucket's numbers into output list
+            while new_bucket != null:
+                for item in new_bucket:
+                    bucket_sort.append(item)
+                pass
 
     # Stretch: Improve this to mutate input instead of creating new output list
 
