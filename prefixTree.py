@@ -1,71 +1,142 @@
 #!python3
 
+from prefixtreenode import PrefixTreeNode
 
-class PrefixTreeNode:
-    """PrefixTreeNode: A node for use in a prefix tree that stores a single
-    character from a string and a structure of children nodes below it, which
-    associates the next character in a string to the next node along its path from
-    the tree's root node to a terminal node that marks the end of the string."""
 
-    # Choose an appropriate type of data structure to store children nodes in
-    # Hint: Choosing list or dict affects implementation of all child methods
-    CHILDREN_TYPE = list  # or dict
+class PrefixTree:
+    """PrefixTree: A multi-way prefix tree that stores strings with efficient
+    methods to insert a string into the tree, check if it contains a matching
+    string, and retrieve all strings that start with a given prefix string.
+    Time complexity of these methods depends only on the number of strings
+    retrieved and their maximum length (size and height of subtree searched),
+    but is independent of the number of strings stored in the prefix tree, as
+    its height depends only on the length of the longest string stored in it.
+    This makes a prefix tree effective for spell-checking and autocompletion.
+    Each string is stored as a sequence of characters along a path from the
+    tree's root node to a terminal node that marks the end of the string."""
 
-    def __init__(self, character=None):
-        """Initialize this prefix tree node with the given character value, an
-        empty structure of children nodes, and a boolean terminal property."""
-        # Character that this node represents
-        self.character = character
-        # Data structure to associate character keys to children node values
-        self.children = PrefixTreeNode.CHILDREN_TYPE()
-        # Marks if this node terminates a string in the prefix tree
-        self.terminal = False
+    # Constant for the start character stored in the prefix tree's root node
+    START_CHARACTER = ''
 
-    def is_terminal(self):
-        """Return True if this prefix tree node terminates a string."""
-        # TODO: Determine if this node is terminal
-        return self.terminal
-
-    def num_children(self):
-        """Return the number of children nodes this prefix tree node has."""
-        # TODO: Determine how many children this node has
-        return len(self.children)
-
-    def has_child(self, character):
-        """Return True if this prefix tree node has a child node that
-        represents the given character amongst its children."""
-        # TODO: Check if given character is amongst this node's children
-        if self.num_children() > 0:
-          for child in self.children:
-            if child.character == character:
-              return True
-
-        return False
-
-    def get_child(self, character):
-        """Return this prefix tree node's child node that represents the given
-        character if it is amongst its children, or raise ValueError if not."""
-        if self.has_child(character):
-            # TODO: Find child node for given character in this node's children
-            for child in self.children:
-              if child.character == character:
-                return child
-        else:
-            raise ValueError(f'No child exists for character {character!r}')
-
-    def add_child(self, character, child_node):
-        """Add the given character and child node as a child of this node, or
-        raise ValueError if given character is amongst this node's children."""
-        if not self.has_child(character):
-            # TODO: Add given character and child node to this node's children
-            self.children.append(child_node)
-        else:
-            raise ValueError(f'Child exists for character {character!r}')
+    def __init__(self, strings=None):
+        """Initialize this prefix tree and insert the given strings, if any."""
+        # Create a new root node with the start character
+        self.root = PrefixTreeNode(PrefixTree.START_CHARACTER)
+        # Count the number of strings inserted into the tree
+        self.size = 0
+        # Insert each string, if any were given
+        if strings is not None:
+            for string in strings:
+                self.insert(string)
 
     def __repr__(self):
-        """Return a code representation of this prefix tree node."""
-        return f'PrefixTreeNode({self.character!r})'
+        """Return a string representation of this prefix tree."""
+        return f'PrefixTree({self.strings()!r})'
 
-    def __str__(self):
-        """Return a string view of this prefix tree node."""
-        return f'({self.character})'
+    def is_empty(self):
+        """Return True if this prefix tree is empty (contains no strings)."""
+        # TODO
+
+    def contains(self, string):
+        """Return True if this prefix tree contains the given string."""
+        # TODO
+
+    def insert(self, string):
+        """Insert the given string into this prefix tree."""
+        # TODO
+
+    def _find_node(self, string):
+        """Return a pair containing the deepest node in this prefix tree that
+        matches the longest prefix of the given string and the node's depth.
+        The depth returned is equal to the number of prefix characters matched.
+        Search is done iteratively with a loop starting from the root node."""
+        # Match the empty string
+        if len(string) == 0:
+            return self.root, 0
+        # Start with the root node
+        node = self.root
+        # TODO
+
+    def complete(self, prefix):
+        """Return a list of all strings stored in this prefix tree that start
+        with the given prefix string."""
+        # Create a list of completions in prefix tree
+        completions = []
+        # TODO
+
+    def strings(self):
+        """Return a list of all strings stored in this prefix tree."""
+        # Create a list of all strings in prefix tree
+        all_strings = []
+        # TODO
+
+    def _traverse(self, node, prefix, visit):
+        """Traverse this prefix tree with recursive depth-first traversal.
+        Start at the given node with the given prefix representing its path in
+        this prefix tree and visit each node with the given visit function."""
+        # TODO
+
+
+def create_prefix_tree(strings):
+    print(f'strings: {strings}')
+
+    tree = PrefixTree()
+    print(f'\ntree: {tree}')
+    print(f'root: {tree.root}')
+    print(f'strings: {tree.strings()}')
+
+    print('\nInserting strings:')
+    for string in strings:
+        tree.insert(string)
+        print(f'insert({string!r}), size: {tree.size}')
+
+    print(f'\ntree: {tree}')
+    print(f'root: {tree.root}')
+
+    print('\nSearching for strings in tree:')
+    for string in sorted(set(strings)):
+        result = tree.contains(string)
+        print(f'contains({string!r}): {result}')
+
+    print('\nSearching for strings not in tree:')
+    prefixes = sorted(set(string[:len(string)//2] for string in strings))
+    for prefix in prefixes:
+        if len(prefix) == 0 or prefix in strings:
+            continue
+        result = tree.contains(prefix)
+        print(f'contains({prefix!r}): {result}')
+
+    print('\nCompleting prefixes in tree:')
+    for prefix in prefixes:
+        completions = tree.complete(prefix)
+        print(f'complete({prefix!r}): {completions}')
+
+    print('\nRetrieving all strings:')
+    retrieved_strings = tree.strings()
+    print(f'strings: {retrieved_strings}')
+    matches = set(retrieved_strings) == set(strings)
+    print(f'matches? {matches}')
+
+
+def main():
+    # Simpe test case of string with partial substring overlaps
+    strings = ['ABC', 'ABD', 'A', 'XYZ']
+    create_prefix_tree(strings)
+
+    # Create a dictionary of tongue-twisters with similar words to test with
+    tongue_twisters = {
+        'Seashells': 'Shelly sells seashells by the sea shore'.split(),
+        # 'Peppers': 'Peter Piper picked a peck of pickled peppers'.split(),
+        # 'Woodchuck': ('How much wood would a wood chuck chuck'
+        #                ' if a wood chuck could chuck wood').split()
+    }
+    # Create a prefix tree with the similar words in each tongue-twister
+    for name, strings in tongue_twisters.items():
+        print(f'{name} tongue-twister:')
+        create_prefix_tree(strings)
+        if len(tongue_twisters) > 1:
+            print('\n' + '='*80 + '\n')
+
+
+if __name__ == '__main__':
+    main()
